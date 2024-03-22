@@ -37,5 +37,9 @@ class AuthController extends Controller
             'token' => $token,
         ]);
         }
+    public function userlist()
+    {
+        return User::all();
+    }
 }
 
