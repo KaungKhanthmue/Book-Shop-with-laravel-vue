@@ -26,6 +26,7 @@ use Illuminate\Filesystem\AwsS3V3Adapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Number;
 use League\Csv\Info;
 use League\Csv\Reader as CsvReader;
 use League\Csv\Statement;
@@ -33,8 +34,6 @@ use League\Csv\Writer;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use SplTempFileObject;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-
-use function Filament\Support\format_number;
 
 trait CanImportRecords
 {
@@ -48,6 +47,8 @@ trait CanImportRecords
     protected int | Closure $chunkSize = 100;
 
     protected int | Closure | null $maxRows = null;
+
+    protected int | Closure | null $headerOffset = null;
 
     protected string | Closure | null $csvDelimiter = null;
 
@@ -92,7 +93,7 @@ trait CanImportRecords
                         $csvReader->setDelimiter($csvDelimiter);
                     }
 
-                    $csvReader->setHeaderOffset(0);
+                    $csvReader->setHeaderOffset($action->getHeaderOffset() ?? 0);
 
                     $csvColumns = $csvReader->getHeader();
 
@@ -141,7 +142,7 @@ trait CanImportRecords
                         $csvReader->setDelimiter($csvDelimiter);
                     }
 
-                    $csvReader->setHeaderOffset(0);
+                    $csvReader->setHeaderOffset($action->getHeaderOffset() ?? 0);
 
                     $csvColumns = $csvReader->getHeader();
                     $csvColumnOptions = array_combine($csvColumns, $csvColumns);
@@ -171,7 +172,7 @@ trait CanImportRecords
                 $csvReader->setDelimiter($csvDelimiter);
             }
 
-            $csvReader->setHeaderOffset(0);
+            $csvReader->setHeaderOffset($action->getHeaderOffset() ?? 0);
             $csvResults = Statement::create()->process($csvReader);
 
             $totalRows = $csvResults->count();
@@ -181,9 +182,9 @@ trait CanImportRecords
                 Notification::make()
                     ->title(__('filament-actions::import.notifications.max_rows.title'))
                     ->body(trans_choice('filament-actions::import.notifications.max_rows.body', $maxRows, [
-                        'count' => format_number($maxRows),
+                        'count' => Number::format($maxRows),
                     ]))
-                    ->success()
+                    ->danger()
                     ->send();
 
                 return;
@@ -211,10 +212,14 @@ trait CanImportRecords
                 Arr::except($data, ['file', 'columnMap']),
             );
 
+            // We do not want to send the loaded user relationship to the queue in job payloads,
+            // in case it contains attributes that are not serializable, such as binary columns.
+            $import->unsetRelation('user');
+
             $importJobs = collect($importChunks)
                 ->map(fn (array $importChunk): object => new ($job)(
                     $import,
-                    rows: $importChunk,
+                    rows: base64_encode(serialize($importChunk)),
                     columnMap: $data['columnMap'],
                     options: $options,
                 ));
@@ -233,6 +238,10 @@ trait CanImportRecords
                 ->when(
                     filled($jobConnection = $importer->getJobConnection()),
                     fn (PendingBatch $batch) => $batch->onConnection($jobConnection),
+                )
+                ->when(
+                    filled($jobBatchName = $importer->getJobBatchName()),
+                    fn (PendingBatch $batch) => $batch->name($jobBatchName),
                 )
                 ->finally(function () use ($import) {
                     $import->touch('completed_at');
@@ -263,10 +272,11 @@ trait CanImportRecords
                             fn (Notification $notification) => $notification->actions([
                                 NotificationAction::make('downloadFailedRowsCsv')
                                     ->label(trans_choice('filament-actions::import.notifications.completed.actions.download_failed_rows_csv.label', $failedRowsCount, [
-                                        'count' => format_number($failedRowsCount),
+                                        'count' => Number::format($failedRowsCount),
                                     ]))
                                     ->color('danger')
-                                    ->url(route('filament.imports.failed-rows.download', ['import' => $import])),
+                                    ->url(route('filament.imports.failed-rows.download', ['import' => $import], absolute: false), shouldOpenInNewTab: true)
+                                    ->markAsRead(),
                             ]),
                         )
                         ->sendToDatabase($import->user);
@@ -276,7 +286,7 @@ trait CanImportRecords
             Notification::make()
                 ->title($action->getSuccessNotificationTitle())
                 ->body(trans_choice('filament-actions::import.notifications.started.body', $import->total_rows, [
-                    'count' => format_number($import->total_rows),
+                    'count' => Number::format($import->total_rows),
                 ]))
                 ->success()
                 ->send();
@@ -299,7 +309,7 @@ trait CanImportRecords
                     }
 
                     $csv->insertOne(array_map(
-                        fn (ImportColumn $column): string => $column->getName(),
+                        fn (ImportColumn $column): string => $column->getExampleHeader(),
                         $columns,
                     ));
 
@@ -395,6 +405,13 @@ trait CanImportRecords
         return $this;
     }
 
+    public function headerOffset(int | Closure | null $offset): static
+    {
+        $this->headerOffset = $offset;
+
+        return $this;
+    }
+
     public function csvDelimiter(string | Closure | null $delimiter): static
     {
         $this->csvDelimiter = $delimiter;
@@ -426,6 +443,11 @@ trait CanImportRecords
     public function getMaxRows(): ?int
     {
         return $this->evaluate($this->maxRows);
+    }
+
+    public function getHeaderOffset(): ?int
+    {
+        return $this->evaluate($this->headerOffset);
     }
 
     public function getCsvDelimiter(?CsvReader $reader = null): ?string

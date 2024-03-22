@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 //admin
-import homeAdminIndex from '../components/admin/index.vue';
-import create from '../components/admin/SkillCreate.vue';
-import edit from '../components/admin/SkillEdit.vue'
+import conHome from '../components/contributor/home.vue';
+
 //pages
 import homePageIndex from '../components/home/index.vue';
 //not found
@@ -15,9 +14,9 @@ import register from '../components/auth/register.vue';
 const routes = [
 
     {
-        path: '/admin/home',
-        name: 'adminHome',
-        component : homeAdminIndex,
+        path: '/contributor/home',
+        name: 'Contributor Home',
+        component : conHome,
         meta:{
             requiresAuth: false
         }
@@ -48,25 +47,12 @@ const routes = [
     },
     {
         path: '/register',
+        name: 'Register',
         component : register,
-    },
-    {
-        path: '/create',
-        component : create,
-        meta:{
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/edit',
-        component : edit,
-        meta:{
-            requiresAuth: true
+        met: {
+            requiresAuth: false
         }
     }
-
-
-    
 
 ];
 const router = createRouter({
@@ -78,8 +64,8 @@ router.beforeEach((to, from) => {
     if (to.meta.requiresAuth && !localStorage.getItem('token')) {
      return {name: 'Login'};
     }
-    if (to.meta.requiresAuth == false && localStorage.getItem('token')) {
-            return {name: 'adminHome'};
-    }
+    // if (to.meta.requiresAuth == false && localStorage.getItem('token')) {
+    //         return {name: 'adminHome'};
+    // }
 });
 export default router;
