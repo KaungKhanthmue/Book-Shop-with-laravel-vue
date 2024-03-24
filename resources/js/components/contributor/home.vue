@@ -10,16 +10,16 @@
             </filter>
             </svg>
         <div class="grid grid-cols-4 gap-2 mx-auto w-[75%]">
-        <div v-for="user in userList" :key="user.id" class="w-25%">
+        <div v-for="book in booklist" :key="book.id" class="w-25%">
         <div class="card ml-2">
         <div class="image container flex justify-item-center overflow-hidden">
         <img src="https://c4.wallpaperflare.com/wallpaper/569/784/53/macro-table-books-blur-wallpaper-preview.jpg" alt="">
         </div>
             <div class="productTitle">
-                {{user.name}}
+                {{book.title}}
             </div>
             <div class="cost">
-                {{user.email}}
+                {{book.description}}
             </div>
             <button class="addtocart">Add to Cart</button>
         </div>
@@ -106,11 +106,12 @@
 import { onMounted,ref } from 'vue';
 import axios from 'axios';
 
-const userList = ref([]);
+const booklist = ref([]);
 const fetchUserList = async () => {
     try {
-        const response = await axios.get('/api/userlist');
-        userList.value = response.data;
+        const response = await axios.get('/api/book/index');
+        console.log(response);
+        booklist.value = response.data;
     } catch (error) {
         console.error('Error fetching user list:', error);
     }

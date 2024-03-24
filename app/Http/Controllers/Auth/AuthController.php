@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,9 @@ class AuthController extends Controller
             'token' => $token,
         ]);
         }
-    public function userlist()
+    public function bookindex()
     {
-        return User::all();
+        return Book::all();
     }
 }
 
