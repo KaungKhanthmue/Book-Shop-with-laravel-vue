@@ -47,4 +47,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class,'role_users');
     }
+    public function contributorRequest()
+    {
+        return $this->hasMany(ContributorRequest::class);
+    }
+    public function likeBook()
+    {
+        return $this->belongsToMany(Book::class, 'book_likes');
+    }
 }

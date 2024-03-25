@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\ContributorRequest;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,16 @@ class DatabaseSeeder extends Seeder
         }
         $category = Category::factory(10)->create();
         $tag = Tag::factory(10)->create();
-        Book::factory(10)->create();
+        // Book::factory(10)->create();
+        for($i=1;$i<10;$i++){
+            $user = User::inRandomOrder()->with('roles',function($q){
+                $q->where('name','user');
+            })->first();
+            ContributorRequest::create([
+                'user_id'=> $user->id,
+                'description' => 'test',
+            ]);
+        }
+
     }
 }

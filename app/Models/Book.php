@@ -21,12 +21,28 @@ class Book extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
-    public function tag()
+    public function tags()
     {
-        return $this->hasMany(Tag::class,'tag_id');
+        return $this->belongsTo(Tag::class,'tag_id');
     }
-    public function category()
+    public function categories()
     {
-        return $this->hasMany(Category::class,'category_id');
+        return $this->belongsTo(Category::class,'category_id');
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
+    }
+    public function bookLike()
+    {
+        return $this->belongsToMany(User::class, 'book_likes');
+    }
+    public function like($id)
+    {
+        return $this->bookLike()->attach($id);
+    }
+    public function unlike($id)
+    {
+        return $this->likeBook()->detach($id);
     }
 }

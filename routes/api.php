@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,11 @@ Route::post('register',[AuthController::class,'register']);
 // Route::group(['middleware' => ['auth:sanctum']], function () {
 
 // });
+Route::middleware('auth:sanctum')->group(function(){
+
+    Route::get('book-index',[BookController::class,'index']);
+    Route::post('book-store',[BookController::class,'store']);
+    Route::post('like-unlike/{book}',[BookController::class,'liked']);
+});
 
 

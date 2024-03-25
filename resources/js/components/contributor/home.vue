@@ -112,7 +112,7 @@ const fetchUserList = async () => {
         const response = await axios.get('/api/book/index');
         console.log(response);
         booklist.value = response.data;
-    } catch (error) {
+    } catch (error) {``
         console.error('Error fetching user list:', error);
     }
 };
