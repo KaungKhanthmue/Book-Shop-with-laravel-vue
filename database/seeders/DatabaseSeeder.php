@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             ContributorRequest::create([
                 'user_id'=> $user->id,
                 'description' => 'test',
+                'status' =>'off',
             ]);
         }
 

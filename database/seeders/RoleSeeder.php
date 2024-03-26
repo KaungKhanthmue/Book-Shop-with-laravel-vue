@@ -25,5 +25,9 @@ class RoleSeeder extends Seeder
             'name' => 'user',
             'slug' => 'User'
         ]);
+        Role::create([
+            'name' => 'freeze',
+            'slug' => 'freeze'
+        ]);
     }
 }

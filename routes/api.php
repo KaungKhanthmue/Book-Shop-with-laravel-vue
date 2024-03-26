@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('book-index',[BookController::class,'index']);
     Route::post('book-store',[BookController::class,'store']);
     Route::post('like-unlike/{book}',[BookController::class,'liked']);
+    Route::get('follow/unfollow/{user}',[BookController::class,'follow_unfollow']);
 });
 
 

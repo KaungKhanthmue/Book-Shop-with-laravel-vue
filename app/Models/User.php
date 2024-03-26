@@ -53,6 +53,22 @@ class User extends Authenticatable
     }
     public function likeBook()
     {
-        return $this->belongsToMany(Book::class, 'book_likes');
+        return $this->belongsToMany(Book::class, 'book_likes','user_id','book_id');
+    }
+    public function follower()
+    {
+        return $this->belongsToMany(User::class,'follows','user_id','follower_id');
+    }
+    public function following()
+    {
+        return $this->belongsToMany(User::class,'follows','follower_id','user_id');
+    }
+    public function follow()
+    {
+        return $this->following()->attach(auth()->user()->id);
+    }
+    public function unfollow()
+    {
+        return $this->following()->detach(auth()->user()->id);
     }
 }

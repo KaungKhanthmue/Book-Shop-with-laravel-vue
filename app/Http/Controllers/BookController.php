@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookResource;
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -20,7 +21,7 @@ class BookController extends Controller
             'description'=>$request->description,
             'category_id'=>$request->category_id,
             'tag_id' =>$request->tag_id,
-            'user_id' =>$request->user_id,
+            'user_id' =>auth()->user()->id,
         ]);
         foreach ($request->file('images') as $image) {
 
@@ -41,8 +42,32 @@ class BookController extends Controller
     }
     public function liked(Book $book)
     {
-        $user= auth()->user();
-        $aa = $book->like($user->id);
-        dd($aa);
+        $user= User::find(auth()->user()->id);
+        $hasLiked = $user->likeBook()->wherePivot('book_id', $book->id)->exists();
+    if($hasLiked)
+    {
+     $book->unlike($user->id);
+     return 'liked book';
+    }
+    else{
+     $book->like($user->id);
+     return 'unlike book';
+    }
+    }
+
+    public function follow_unfollow(User $user)
+    {
+        $isFollowing = $user->following()->where('follower_id',auth()->user()->id)->exists();
+        
+        if($isFollowing)
+        {
+            $user->unfollow();
+            dd('unfollow');
+        }
+        else{
+            $user->follow();
+            dd('follow');
+        }
+
     }
 }

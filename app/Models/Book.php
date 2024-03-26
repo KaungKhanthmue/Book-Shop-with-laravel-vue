@@ -43,6 +43,6 @@ class Book extends Model
     }
     public function unlike($id)
     {
-        return $this->likeBook()->detach($id);
+        return $this->bookLike()->detach($id);
     }
 }

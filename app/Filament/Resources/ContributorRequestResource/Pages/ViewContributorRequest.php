@@ -4,17 +4,16 @@ namespace App\Filament\Resources\ContributorRequestResource\Pages;
 
 use App\Filament\Resources\ContributorRequestResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditContributorRequest extends EditRecord
+class ViewContributorRequest extends ViewRecord
 {
     protected static string $resource = ContributorRequestResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

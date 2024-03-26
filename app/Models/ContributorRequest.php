@@ -11,6 +11,7 @@ class ContributorRequest extends Model
     protected $fillable= [
         'user_id',
         'description',
+        'status'
     ];
     public function user()
     {
