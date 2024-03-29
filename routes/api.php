@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('book-index',[BookController::class,'index']);
     Route::post('book-store',[BookController::class,'store']);
     Route::post('like-unlike/{book}',[BookController::class,'liked']);
-    Route::get('follow/unfollow/{user}',[BookController::class,'follow_unfollow']);
+    Route::get('follow/unfollow/{user}',[UserController::class,'follow_unfollow']);
+    Route::get('add-friend/{user}',[UserController::class,'addAndRemoveFriend']);
+    Route::get('freind/requestlist/{user}',[UserController::class,'freindRequestList']);
 });
 
 

@@ -63,6 +63,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class,'follows','follower_id','user_id');
     }
+
     public function follow()
     {
         return $this->following()->attach(auth()->user()->id);
@@ -71,4 +72,21 @@ class User extends Authenticatable
     {
         return $this->following()->detach(auth()->user()->id);
     }
+    public function freindOwner()
+    {
+        return $this->belongsToMany(User::class,'friend_adds','user_id','friend_add_user_id');
+    }
+    public function freindAdder()
+    {
+        return $this->belongsToMany(User::class,'user_id','friend_add_user_id','friend_adds');
+    }
+    public function addfriend()
+    {
+        return $this->freindOwner()->attach(auth()->user()->id);
+    }
+    public function unFriend()
+    {
+        return $this->freindOwner()->detach(auth()->user()->id);
+    }
+
 }

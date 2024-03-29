@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 //admin
 import conHome from '../components/contributor/home.vue';
+import profileindex from '../components/contributor/profile.vue';
 
 //pages
 import homePageIndex from '../components/home/index.vue';
@@ -25,6 +26,14 @@ const routes = [
         path: '/',
         name: 'Home',
         component : homePageIndex,
+        meta:{
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component : profileindex,
         meta:{
             requiresAuth: false
         }
