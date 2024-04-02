@@ -6,6 +6,7 @@ import profileindex from '../components/contributor/profile.vue';
 
 //pages
 import homePageIndex from '../components/home/index.vue';
+import friendList from '../components/home/friendLists.vue';
 //not found
 import notFound from '../components/noFound.vue';
 //auth
@@ -26,6 +27,14 @@ const routes = [
         path: '/',
         name: 'Home',
         component : homePageIndex,
+        meta:{
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/friendlist',
+        name: 'FriendList',
+        component: friendList,
         meta:{
             requiresAuth: false
         }

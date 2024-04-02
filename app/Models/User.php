@@ -88,5 +88,9 @@ class User extends Authenticatable
     {
         return $this->freindOwner()->detach(auth()->user()->id);
     }
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
+    }
 
 }

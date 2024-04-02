@@ -30,11 +30,11 @@ class UserController extends Controller
         if($friend)
         {
             $user->unfriend();
-            dd('unfriend');
+            // dd('unfriend');
         }
         else{
             $user->addfriend();
-            dd('added friend');
+            // dd('added friend');
         }
     }
     public function freindRequestList(User $user)

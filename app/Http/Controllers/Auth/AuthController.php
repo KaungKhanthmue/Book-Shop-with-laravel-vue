@@ -42,5 +42,46 @@ class AuthController extends Controller
     {
         return Book::all();
     }
+    public function edit(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $del_profile = $user->images()->where('image_type', 'profile_photo')->first();
+        $del_cover = $user->images()->where('image_type', 'cover_photo')->first();
+        
+        if ($del_profile) {
+            $del_profile->delete();
+        }
+        
+        if ($del_cover) {
+            $del_cover->delete();
+        }
+        $user->update([
+            'name'=>$request->name,
+            'nick_name' =>$request->nick_name,
+        ]);
+        $profile_image = $request->file('profile_image');
+        $profile_img_path = $profile_image->storePublicly('images', 'public');
+        $profileName = $profile_image->getClientOriginalName();
+        $profileFileType = $profile_image->getClientOriginalExtension();
+
+        $user->images()->create([
+            'name' => $profileName,
+            'file_type' => $profileFileType,
+            'image_type' => 'profile_photo',
+            'url' => $profile_img_path,
+        ]);
+
+        $cover_image = $request->file('cover_image');
+        $cover_img_path  = $cover_image->storePublicly('images', 'public');
+        $coverName = $cover_image->getClientOriginalName();
+        $coverFileType = $cover_image->getClientOriginalExtension();
+        $user->images()->create([
+            'name' => $coverName,
+            'file_type' => $coverFileType,
+            'image_type' => 'cover_photo',
+            'url' => $cover_img_path,
+        ]);
+        return $user;
+    }
 }
 

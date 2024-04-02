@@ -89,9 +89,7 @@ onMounted(fetchUserList);
 </script>
 
 <style >
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 .card {
   position: relative;
   background: transparent;

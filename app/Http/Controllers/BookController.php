@@ -23,7 +23,9 @@ class BookController extends Controller
             'tag_id' =>$request->tag_id,
             'user_id' =>auth()->user()->id,
         ]);
+        
         foreach ($request->file('images') as $image) {
+            
 
             $imagePath = $image->storePublicly('images', 'public');
             $imageName = $image->getClientOriginalName();
@@ -54,6 +56,7 @@ class BookController extends Controller
      return 'unlike book';
     }
     }
+    
     // https://wap.kbzpay.com/pgw/uat/api/#/en/docs/QRPay/faq-
 //     <?php
 
