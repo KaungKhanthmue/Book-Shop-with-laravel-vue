@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('follow/unfollow/{user}',[UserController::class,'follow_unfollow']);
     Route::get('add-friend/{user}',[UserController::class,'addAndRemoveFriend']);
     Route::get('freind/requestlist/{user}',[UserController::class,'freindRequestList']);
+    Route::get('friendall',[UserController::class,'friendAll']);
 });
 
 

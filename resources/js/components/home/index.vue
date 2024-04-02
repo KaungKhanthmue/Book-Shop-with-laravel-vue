@@ -78,7 +78,6 @@ const booklist = ref([]);
 const fetchUserList = async () => {
   try {
     const response = await axios.get("/api/book/index");
-    console.log(response);
     booklist.value = response.data;
   } catch (error) {
     ``;
