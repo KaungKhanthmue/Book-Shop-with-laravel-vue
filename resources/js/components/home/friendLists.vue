@@ -83,7 +83,7 @@
             </svg>
           </div>
           <div class="card__title">{{friend.name}}</div>
-          <div class="card__subtitle">{{freind.nick_name}}</div>
+          <div class="card__subtitle"></div>
           <div class="card__wrapper">
             <button class="card__btn">Follow</button>
             <button class="card__btn card__btn-solid">Button</button>

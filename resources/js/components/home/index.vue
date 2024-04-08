@@ -1,19 +1,35 @@
 <template>
   <div class="h-[1000px] w-full bg-green-200">
     <Nav />
-    <div class="container mx-auto mx-auto mt-9 bg-red-500 rounded-3xl pb-9">
+    <div class="container mx-auto mx-auto mt-9 bg-red-700 rounded-3xl pb-9">
+      <div class="flex">
+        <button class="btn">one</button>
+        <button class="btn">two</button>
+        <button class="btn">three</button>
+        <button class="btn">four</button>
+        <button class="btn">five</button>
+        <button class="btn">six</button>
+        <div class="input-container h-[50px] w-[500px] mt-3">
+          <input type="text" placeholder="Add Item" />
+          <button class="button">Search</button>
+        </div>
+      </div>
       <div class="mx-[100px]">
         <div class="grid grid-cols-4 gap-7">
-          <div v-for="book in booklist" :key="book.id" class="border-red-900 border-double bg-white rounded-3xl border-8">
+          <div
+            v-for="book in booklist"
+            :key="book.id"
+            class="border-black border bg-white rounded-3xl border-4"
+          >
             <div class="flex justify-center">
               <div class="card">
-                <div class="container-image overflow-hidden">                       
+                <div class="container-image overflow-hidden">
                   <img
                     class="w-full h-[180px] mt-[5px]"
                     src="https://getwallpapers.com/wallpaper/full/2/c/a/165944.jpg"
                     alt
                   />
-                </div>                                                   
+                </div>
                 <div class="content">
                   <div class="detail">
                     <span>
@@ -48,7 +64,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex justify-center pb-9">
+            <div class="flex justify-center ">
               <button class="btn" type="button">
                 <strong>{{book.title}}</strong>
                 <div id="container-stars">
@@ -60,6 +76,20 @@
                   <div class="circle"></div>
                 </div>
               </button>
+            </div>
+            <div class="flex justify-between p-2">
+              <button class="bt px-2">
+  <svg class="empty" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0H24V24H0z"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"></path></svg>
+  <svg class="filled" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path></svg>
+  100
+</button>
+<button class="flex bg-gray-300 pt-2 pl-2 rounded-3xl w-[80px] shadow-2xl">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+<div class="ml-2">100</div>
+</button>
             </div>
           </div>
         </div>
@@ -88,6 +118,187 @@ onMounted(fetchUserList);
 </script>
 
 <style >
+.bt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 20px 25px 20px 22px; */
+  box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-color: #e8e8e8;
+  border-color: #ffe2e2;
+  border-style: solid;
+  border-radius: 35px;
+  font-size: 25px;
+  font-weight: 900;
+  color: rgb(134, 124, 124);
+  font-family: monospace;
+  transition: transform 400ms cubic-bezier(.68,-0.55,.27,2.5), 
+  border-color 400ms ease-in-out,
+  background-color 400ms ease-in-out;
+  word-spacing: -2px;
+}
+
+@keyframes movingBorders {
+  0% {
+    border-color: #fce4e4;
+  }
+
+  50% {
+    border-color: #ffd8d8;
+  }
+
+  90% {
+    border-color: #fce4e4;
+  }
+}
+
+.bt:hover {
+  background-color: #eee;
+  transform: scale(105%);
+  animation: movingBorders 3s infinite;
+}
+
+.bt svg {
+  margin-right: 11px;
+  fill: rgb(255, 110, 110);
+  transition: opacity 100ms ease-in-out;
+}
+
+.filled {
+  position: absolute;
+  opacity: 0;
+  top: 2px;
+  left: 10px;
+}
+
+@keyframes beatingHeart {
+  0% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.15);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+.bt:hover .empty {
+  opacity: 0;
+}
+
+.bt:hover .filled {
+  opacity: 1;
+  animation: beatingHeart 1.2s infinite;
+}
+.input-container {
+  display: flex;
+  background: white;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #23272f 0%, #14161a 100%);
+  box-shadow: 10px 10px 20px #0e1013, -10px -10px 40px #383e4b;
+  padding: 0.3rem;
+  gap: 0.3rem;
+}
+
+.input-container input {
+  border-radius: 0.8rem 0 0 0.8rem;
+  background: #23272f;
+  box-shadow: inset 5px 5px 10px #0e1013, inset -5px -5px 10px #383e4b,
+    0px 0px 100px rgba(255, 212, 59, 0), 0px 0px 100px rgba(255, 102, 0, 0);
+  width: 100%;
+  flex-basis: 75%;
+  padding: 1rem;
+  border: none;
+  border: 1px solid transparent;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-container input:focus {
+  border: 1px solid #ffd43b;
+  outline: none;
+  box-shadow: inset 0px 0px 10px rgba(255, 102, 0, 0.5),
+    inset 0px 0px 10px rgba(255, 212, 59, 0.5),
+    0px 0px 100px rgba(255, 212, 59, 0.5), 0px 0px 100px rgba(255, 102, 0, 0.5);
+}
+
+.input-container button {
+  flex-basis: 25%;
+  background: linear-gradient(
+    135deg,
+    rgb(255, 212, 59) 0%,
+    rgb(255, 102, 0) 100%
+  );
+  box-shadow: 0px 0px 1px rgba(255, 212, 59, 0.5),
+    0px 0px 1px rgba(255, 102, 0, 0.5);
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: #23272f;
+  border: none;
+  width: 100%;
+  border-radius: 0 1rem 1rem 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-container button:hover {
+  background: linear-gradient(
+    135deg,
+    rgb(255, 212, 59) 50%,
+    rgb(255, 102, 0) 100%
+  );
+  box-shadow: 0px 0px 100px rgba(255, 212, 59, 0.5),
+    0px 0px 100px rgba(255, 102, 0, 0.5);
+}
+
+@media (max-width: 500px) {
+  .input-container {
+    flex-direction: column;
+  }
+
+  .input-container input {
+    border-radius: 0.8rem;
+  }
+
+  .input-container button {
+    border-radius: 0.8rem;
+  }
+}
+.btn {
+  margin: 12px;
+  height: 50px;
+  width: 120px;
+  border-radius: 10px;
+  background: #333;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
+    inset -5px -5px 10px #222;
+  font-family: "Damion", cursive;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  color: rgb(161, 161, 161);
+  transition: 500ms;
+}
+
+.btn:hover {
+  box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
+    inset -5px -5px 10px #444;
+  color: #d6d6d6;
+  transition: 500ms;
+}
 
 .card {
   position: relative;

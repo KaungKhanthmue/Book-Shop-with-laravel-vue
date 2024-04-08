@@ -44,6 +44,10 @@ class UserController extends Controller
          return FriendRequestResource::collection($request);
     }
     public function friendAll(){
-        return User::whereNot('id',auth()->user()->id)->get();
+        if(auth('sanctum')->user()){
+            return User::whereNot('id',auth('sanctum')->user()->id)->get();
+        }
+        return User::all();
+  
     }
 }
