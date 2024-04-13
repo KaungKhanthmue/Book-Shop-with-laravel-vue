@@ -38,10 +38,6 @@ class AuthController extends Controller
             'token' => $token,
         ]);
         }
-    public function bookindex()
-    {
-        return Book::all();
-    }
     public function edit(Request $request)
     {
         $user = User::find(auth()->user()->id);

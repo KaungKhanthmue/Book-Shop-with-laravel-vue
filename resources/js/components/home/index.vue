@@ -14,7 +14,7 @@
           <button class="button">Search</button>
         </div>
       </div>
-      <div class="mx-[100px]">
+      <div class="mx-[100px] pt-10">
         <div class="grid grid-cols-4 gap-7">
           <div
             v-for="book in booklist"
@@ -23,20 +23,19 @@
           >
             <div class="flex justify-center">
               <div class="card">
-                <div class="container-image overflow-hidden">
+                <div
+                v-for="image in book.images"
+                :key="image.id"
+                 class="container-image overflow-hidden ">
                   <img
                     class="w-full h-[180px] mt-[5px]"
-                    src="https://getwallpapers.com/wallpaper/full/2/c/a/165944.jpg"
+                    :src="image.url"
                     alt
                   />
                 </div>
                 <div class="content">
                   <div class="detail">
-                    <span>
-                      Lorem
-                      <br />Ipsum dolor.
-                    </span>
-                    <p>$199</p>
+                    <p>{{book.price}}</p>
                     <button>Buy</button>
                   </div>
                   <div class="product-image">
@@ -64,17 +63,23 @@
                 </div>
               </div>
             </div>
-            <div class="flex justify-center">
-              <button class="btn" type="button">
-                <strong>{{book.title}}</strong>
-                <div id="container-stars">
-                  <div id="stars"></div>
-                </div>
-
-                <div id="glow">
-                  <div class="circle"></div>
-                  <div class="circle"></div>
-                </div>
+            <div class="flex">             
+                <button role="button" class="golden-button w-full mx-2 text-red">
+                  <div class="flex justify-between">
+                    <div class="">Title</div>
+                    <div class="">:</div>
+                    <div class="">{{book.title}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="">Descritpiton</div>
+                    <div class="">:</div>
+                    <div class="">{{book.descritpiton}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="">Price</div>
+                    <div class="">:</div>
+                    <div class="">{{book.price}}</div>
+                  </div>          
               </button>
             </div>
             <div class="flex justify-between p-2">
@@ -135,7 +140,569 @@
     <!-- <router-link to="/login">Login</router-link> -->
   </div>
 </template>
+<style scoped>
+  .bt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px 25px 20px 22px; */
+    box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color: #e8e8e8;
+    border-color: #ffe2e2;
+    border-style: solid;
+    border-radius: 35px;
+    font-size: 25px;
+    font-weight: 900;
+    color: rgb(134, 124, 124);
+    font-family: monospace;
+    transition: transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
+      border-color 400ms ease-in-out, background-color 400ms ease-in-out;
+    word-spacing: -2px;
+  }
 
+  @keyframes movingBorders {
+    0% {
+      border-color: #fce4e4;
+    }
+
+    50% {
+      border-color: #ffd8d8;
+    }
+
+    90% {
+      border-color: #fce4e4;
+    }
+  }
+
+  .bt:hover {
+    background-color: #eee;
+    transform: scale(105%);
+    animation: movingBorders 3s infinite;
+  }
+
+  .bt svg {
+    margin-right: 11px;
+    fill: rgb(255, 110, 110);
+    transition: opacity 100ms ease-in-out;
+  }
+
+  .filled {
+    position: absolute;
+    opacity: 0;
+    top: 2px;
+    left: 10px;
+  }
+
+  @keyframes beatingHeart {
+    0% {
+      transform: scale(1);
+    }
+
+    15% {
+      transform: scale(1.15);
+    }
+
+    30% {
+      transform: scale(1);
+    }
+
+    45% {
+      transform: scale(1.15);
+    }
+
+    60% {
+      transform: scale(1);
+    }
+  }
+
+  .bt:hover .empty {
+    opacity: 0;
+  }
+
+  .bt:hover .filled {
+    opacity: 1;
+    animation: beatingHeart 1.2s infinite;
+  }
+  .input-container {
+    display: flex;
+    background: white;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #23272f 0%, #14161a 100%);
+    box-shadow: 10px 10px 20px #0e1013, -10px -10px 40px #383e4b;
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+
+  .input-container input {
+    border-radius: 0.8rem 0 0 0.8rem;
+    background: #23272f;
+    box-shadow: inset 5px 5px 10px #0e1013, inset -5px -5px 10px #383e4b,
+      0px 0px 100px rgba(255, 212, 59, 0), 0px 0px 100px rgba(255, 102, 0, 0);
+    width: 100%;
+    flex-basis: 75%;
+    padding: 1rem;
+    border: none;
+    border: 1px solid transparent;
+    color: white;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .input-container input:focus {
+    border: 1px solid #ffd43b;
+    outline: none;
+    box-shadow: inset 0px 0px 10px rgba(255, 102, 0, 0.5),
+      inset 0px 0px 10px rgba(255, 212, 59, 0.5),
+      0px 0px 100px rgba(255, 212, 59, 0.5), 0px 0px 100px rgba(255, 102, 0, 0.5);
+  }
+
+  .input-container button {
+    flex-basis: 25%;
+    background: linear-gradient(
+      135deg,
+      rgb(255, 212, 59) 0%,
+      rgb(255, 102, 0) 100%
+    );
+    box-shadow: 0px 0px 1px rgba(255, 212, 59, 0.5),
+      0px 0px 1px rgba(255, 102, 0, 0.5);
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    color: #23272f;
+    border: none;
+    width: 100%;
+    border-radius: 0 1rem 1rem 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .input-container button:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255, 212, 59) 50%,
+      rgb(255, 102, 0) 100%
+    );
+    box-shadow: 0px 0px 100px rgba(255, 212, 59, 0.5),
+      0px 0px 100px rgba(255, 102, 0, 0.5);
+  }
+
+  @media (max-width: 500px) {
+    .input-container {
+      flex-direction: column;
+    }
+
+    .input-container input {
+      border-radius: 0.8rem;
+    }
+
+    .input-container button {
+      border-radius: 0.8rem;
+    }
+  }
+  .btn {
+    margin: 12px;
+    height: 50px;
+    width: 120px;
+    border-radius: 10px;
+    background: #333;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
+      inset -5px -5px 10px #222;
+    font-family: "Damion", cursive;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    color: rgb(161, 161, 161);
+    transition: 500ms;
+  }
+
+  .btn:hover {
+    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
+      inset -5px -5px 10px #444;
+    color: #d6d6d6;
+    transition: 500ms;
+  }
+
+  .card {
+    position: relative;
+    background: transparent;
+    width: 300px;
+    height: 200px;
+    border: none;
+  }
+
+  .card:hover {
+    width: 300px;
+  }
+
+  .card .container-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e7e7e7;
+    width: 190px;
+    height: 190px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865,
+      inset 2px 2px 2px #ffffff;
+    transition: all 0.3s ease-in-out, opacity 0.3s;
+    transition-delay: 0.6s, 0s;
+  }
+
+  .card:hover .container-image {
+    opacity: 0;
+    border-radius: 8px;
+    transition-delay: 0s, 0.6s;
+  }
+
+  .card .container-image .image-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 125px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 2px #1818188a);
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.4s;
+  }
+
+  .card:hover .container-image .image-circle {
+    opacity: 0;
+    transition-delay: 0s;
+  }
+
+  .card .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e7e7e7;
+    padding: 20px;
+    width: 190px;
+    height: 190px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865,
+      inset 2px 2px 2px #ffffff;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+    transition-delay: 0s;
+    z-index: 1;
+  }
+
+  .card:hover .content {
+    width: 200px;
+    height: 190px;
+    visibility: visible;
+    transition-delay: 0.5s;
+  }
+
+  .card .content .detail {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0s;
+  }
+
+  .card:hover .content .detail {
+    color: #181818;
+    opacity: 100%;
+    transition: 1s;
+    transition-delay: 0.3s;
+  }
+
+  .card .content .detail span {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .card .content .detail button {
+    background: #b8854b;
+    margin-top: auto;
+    width: 75px;
+    height: 25px;
+    color: #ffffff;
+    font-size: 13px;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .card .content .detail button:hover {
+    background: #d39f63;
+  }
+
+  .card .content .product-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card .content .product-image .box-image {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: -25%;
+    width: 100%;
+    height: 115%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.5s ease-in-out;
+    transition-delay: 0s;
+  }
+
+  .card:hover .content .product-image .box-image {
+    top: -25%;
+    left: 0;
+    opacity: 100%;
+    transform: scale(1);
+    transition-delay: 0.3s;
+  }
+
+  .card .content .product-image .box-image .img-product {
+    margin: auto;
+    width: 7rem;
+    height: auto;
+  }
+
+  .fil-shoes1,
+  .fil-shoes2 {
+    fill: #333333;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13rem;
+    overflow: hidden;
+    height: 3rem;
+    background-size: 300% 300%;
+    backdrop-filter: blur(1rem);
+    border-radius: 5rem;
+    transition: 0.5s;
+    animation: gradient_301 5s ease infinite;
+    border: double 4px transparent;
+    background-image: linear-gradient(#212121, #212121),
+      linear-gradient(
+        137.48deg,
+        #ffdb3b 10%,
+        #fe53bb 45%,
+        #8f51ea 67%,
+        #0044ff 87%
+      );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+.golden-button {
+  touch-action: manipulation;
+  display: inline-block;
+  outline: none;
+  font-family: inherit;
+  font-size: 1em;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0.3em;
+  line-height: 1.5em;
+  padding: 0 1em;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
+    inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+    inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+  background-image: linear-gradient(
+    160deg,
+    #a54e07,
+    #b47e11,
+    #fef1a2,
+    #bc881b,
+    #a54e07
+  );
+  border: 1px solid #a55d07;
+  color: rgb(120, 50, 5);
+  text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.golden-button:focus,
+.golden-button:hover {
+  background-size: 150% 150%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23),
+    inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+  border: 1px solid rgba(165, 93, 7, 0.6);
+  color: rgba(120, 50, 5, 0.8);
+}
+
+.golden-button:active {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
+    inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+}
+
+
+  #container-stars {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: 0.5s;
+    backdrop-filter: blur(1rem);
+    border-radius: 5rem;
+  }
+
+  strong {
+    z-index: 2;
+    font-family: "Avalors Personal Use";
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #ffffff;
+    text-shadow: 0 0 4px white;
+  }
+
+  #glow {
+    position: absolute;
+    display: flex;
+    width: 12rem;
+  }
+
+  .circle {
+    width: 100%;
+    height: 30px;
+    filter: blur(2rem);
+    animation: pulse_3011 4s infinite;
+    z-index: -1;
+  }
+
+  .circle:nth-of-type(1) {
+    background: rgba(254, 83, 186, 0.636);
+  }
+
+  .circle:nth-of-type(2) {
+    background: rgba(142, 81, 234, 0.704);
+  }
+
+  .btn:hover #container-stars {
+    z-index: 1;
+    background-color: #212121;
+  }
+
+  .btn:hover {
+    transform: scale(1.1);
+  }
+
+  .btn:active {
+    border: double 4px #fe53bb;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: none;
+  }
+
+  .btn:active .circle {
+    background: #fe53bb;
+  }
+
+  #stars {
+    position: relative;
+    background: transparent;
+    width: 200rem;
+    height: 200rem;
+  }
+
+  #stars::after {
+    content: "";
+    position: absolute;
+    top: -10rem;
+    left: -100rem;
+    width: 100%;
+    height: 100%;
+    animation: animStarRotate 90s linear infinite;
+  }
+
+  #stars::after {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%);
+    background-size: 50px 50px;
+  }
+
+  #stars::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 170%;
+    height: 500%;
+    animation: animStar 60s linear infinite;
+  }
+
+  #stars::before {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%);
+    background-size: 50px 50px;
+    opacity: 0.5;
+  }
+
+  @keyframes animStar {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(-135rem);
+    }
+  }
+
+  @keyframes animStarRotate {
+    from {
+      transform: rotate(360deg);
+    }
+
+    to {
+      transform: rotate(0);
+    }
+  }
+
+  @keyframes gradient_301 {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes pulse_3011 {
+    0% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+  }
+</style>
 <script setup>
 import Nav from "@/components/layout/nav.vue";
 import { onMounted, ref } from "vue";
@@ -144,8 +711,9 @@ import axios from "axios";
 const booklist = ref([]);
 const fetchUserList = async () => {
   try {
-    const response = await axios.get("/api/book/index");
-    booklist.value = response.data;
+    const response = await axios.get("api/books/index");
+    console.log(response.data.data);
+    booklist.value = response.data.data;
   } catch (error) {
     ``;
     console.error("Error fetching user list:", error);
@@ -154,521 +722,3 @@ const fetchUserList = async () => {
 onMounted(fetchUserList);
 </script>
 
-<style >
-.bt {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* padding: 20px 25px 20px 22px; */
-  box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  background-color: #e8e8e8;
-  border-color: #ffe2e2;
-  border-style: solid;
-  border-radius: 35px;
-  font-size: 25px;
-  font-weight: 900;
-  color: rgb(134, 124, 124);
-  font-family: monospace;
-  transition: transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
-    border-color 400ms ease-in-out, background-color 400ms ease-in-out;
-  word-spacing: -2px;
-}
-
-@keyframes movingBorders {
-  0% {
-    border-color: #fce4e4;
-  }
-
-  50% {
-    border-color: #ffd8d8;
-  }
-
-  90% {
-    border-color: #fce4e4;
-  }
-}
-
-.bt:hover {
-  background-color: #eee;
-  transform: scale(105%);
-  animation: movingBorders 3s infinite;
-}
-
-.bt svg {
-  margin-right: 11px;
-  fill: rgb(255, 110, 110);
-  transition: opacity 100ms ease-in-out;
-}
-
-.filled {
-  position: absolute;
-  opacity: 0;
-  top: 2px;
-  left: 10px;
-}
-
-@keyframes beatingHeart {
-  0% {
-    transform: scale(1);
-  }
-
-  15% {
-    transform: scale(1.15);
-  }
-
-  30% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(1.15);
-  }
-
-  60% {
-    transform: scale(1);
-  }
-}
-
-.bt:hover .empty {
-  opacity: 0;
-}
-
-.bt:hover .filled {
-  opacity: 1;
-  animation: beatingHeart 1.2s infinite;
-}
-.input-container {
-  display: flex;
-  background: white;
-  border-radius: 1rem;
-  background: linear-gradient(135deg, #23272f 0%, #14161a 100%);
-  box-shadow: 10px 10px 20px #0e1013, -10px -10px 40px #383e4b;
-  padding: 0.3rem;
-  gap: 0.3rem;
-}
-
-.input-container input {
-  border-radius: 0.8rem 0 0 0.8rem;
-  background: #23272f;
-  box-shadow: inset 5px 5px 10px #0e1013, inset -5px -5px 10px #383e4b,
-    0px 0px 100px rgba(255, 212, 59, 0), 0px 0px 100px rgba(255, 102, 0, 0);
-  width: 100%;
-  flex-basis: 75%;
-  padding: 1rem;
-  border: none;
-  border: 1px solid transparent;
-  color: white;
-  transition: all 0.2s ease-in-out;
-}
-
-.input-container input:focus {
-  border: 1px solid #ffd43b;
-  outline: none;
-  box-shadow: inset 0px 0px 10px rgba(255, 102, 0, 0.5),
-    inset 0px 0px 10px rgba(255, 212, 59, 0.5),
-    0px 0px 100px rgba(255, 212, 59, 0.5), 0px 0px 100px rgba(255, 102, 0, 0.5);
-}
-
-.input-container button {
-  flex-basis: 25%;
-  background: linear-gradient(
-    135deg,
-    rgb(255, 212, 59) 0%,
-    rgb(255, 102, 0) 100%
-  );
-  box-shadow: 0px 0px 1px rgba(255, 212, 59, 0.5),
-    0px 0px 1px rgba(255, 102, 0, 0.5);
-  font-weight: 500;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  color: #23272f;
-  border: none;
-  width: 100%;
-  border-radius: 0 1rem 1rem 0;
-  transition: all 0.2s ease-in-out;
-}
-
-.input-container button:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(255, 212, 59) 50%,
-    rgb(255, 102, 0) 100%
-  );
-  box-shadow: 0px 0px 100px rgba(255, 212, 59, 0.5),
-    0px 0px 100px rgba(255, 102, 0, 0.5);
-}
-
-@media (max-width: 500px) {
-  .input-container {
-    flex-direction: column;
-  }
-
-  .input-container input {
-    border-radius: 0.8rem;
-  }
-
-  .input-container button {
-    border-radius: 0.8rem;
-  }
-}
-.btn {
-  margin: 12px;
-  height: 50px;
-  width: 120px;
-  border-radius: 10px;
-  background: #333;
-  justify-content: center;
-  align-items: center;
-  box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
-    inset -5px -5px 10px #222;
-  font-family: "Damion", cursive;
-  cursor: pointer;
-  border: none;
-  font-size: 16px;
-  color: rgb(161, 161, 161);
-  transition: 500ms;
-}
-
-.btn:hover {
-  box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
-    inset -5px -5px 10px #444;
-  color: #d6d6d6;
-  transition: 500ms;
-}
-
-.card {
-  position: relative;
-  background: transparent;
-  width: 300px;
-  height: 300px;
-  border: none;
-}
-
-.card:hover {
-  width: 300px;
-}
-
-.card .container-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #e7e7e7;
-  width: 190px;
-  height: 190px;
-  cursor: pointer;
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865,
-    inset 2px 2px 2px #ffffff;
-  transition: all 0.3s ease-in-out, opacity 0.3s;
-  transition-delay: 0.6s, 0s;
-}
-
-.card:hover .container-image {
-  opacity: 0;
-  border-radius: 8px;
-  transition-delay: 0s, 0.6s;
-}
-
-.card .container-image .image-circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 125px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(2px 2px 2px #1818188a);
-  transition: all 0.3s ease-in-out;
-  transition-delay: 0.4s;
-}
-
-.card:hover .container-image .image-circle {
-  opacity: 0;
-  transition-delay: 0s;
-}
-
-.card .content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #e7e7e7;
-  padding: 20px;
-  width: 190px;
-  height: 190px;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865,
-    inset 2px 2px 2px #ffffff;
-  visibility: hidden;
-  transition: 0.3s ease-in-out;
-  transition-delay: 0s;
-  z-index: 1;
-}
-
-.card:hover .content {
-  width: 200px;
-  height: 190px;
-  visibility: visible;
-  transition-delay: 0.5s;
-}
-
-.card .content .detail {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  transition-delay: 0s;
-}
-
-.card:hover .content .detail {
-  color: #181818;
-  opacity: 100%;
-  transition: 1s;
-  transition-delay: 0.3s;
-}
-
-.card .content .detail span {
-  margin-bottom: 5px;
-  font-size: 18px;
-  font-weight: 800;
-}
-
-.card .content .detail button {
-  background: #b8854b;
-  margin-top: auto;
-  width: 75px;
-  height: 25px;
-  color: #ffffff;
-  font-size: 13px;
-  border: none;
-  border-radius: 8px;
-  transition: 0.3s ease-in-out;
-}
-
-.card .content .detail button:hover {
-  background: #d39f63;
-}
-
-.card .content .product-image {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.card .content .product-image .box-image {
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: -25%;
-  width: 100%;
-  height: 115%;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.5s ease-in-out;
-  transition-delay: 0s;
-}
-
-.card:hover .content .product-image .box-image {
-  top: -25%;
-  left: 0;
-  opacity: 100%;
-  transform: scale(1);
-  transition-delay: 0.3s;
-}
-
-.card .content .product-image .box-image .img-product {
-  margin: auto;
-  width: 7rem;
-  height: auto;
-}
-
-.fil-shoes1,
-.fil-shoes2 {
-  fill: #333333;
-}
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 13rem;
-  overflow: hidden;
-  height: 3rem;
-  background-size: 300% 300%;
-  backdrop-filter: blur(1rem);
-  border-radius: 5rem;
-  transition: 0.5s;
-  animation: gradient_301 5s ease infinite;
-  border: double 4px transparent;
-  background-image: linear-gradient(#212121, #212121),
-    linear-gradient(
-      137.48deg,
-      #ffdb3b 10%,
-      #fe53bb 45%,
-      #8f51ea 67%,
-      #0044ff 87%
-    );
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-}
-
-#container-stars {
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  transition: 0.5s;
-  backdrop-filter: blur(1rem);
-  border-radius: 5rem;
-}
-
-strong {
-  z-index: 2;
-  font-family: "Avalors Personal Use";
-  font-size: 12px;
-  letter-spacing: 5px;
-  color: #ffffff;
-  text-shadow: 0 0 4px white;
-}
-
-#glow {
-  position: absolute;
-  display: flex;
-  width: 12rem;
-}
-
-.circle {
-  width: 100%;
-  height: 30px;
-  filter: blur(2rem);
-  animation: pulse_3011 4s infinite;
-  z-index: -1;
-}
-
-.circle:nth-of-type(1) {
-  background: rgba(254, 83, 186, 0.636);
-}
-
-.circle:nth-of-type(2) {
-  background: rgba(142, 81, 234, 0.704);
-}
-
-.btn:hover #container-stars {
-  z-index: 1;
-  background-color: #212121;
-}
-
-.btn:hover {
-  transform: scale(1.1);
-}
-
-.btn:active {
-  border: double 4px #fe53bb;
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  animation: none;
-}
-
-.btn:active .circle {
-  background: #fe53bb;
-}
-
-#stars {
-  position: relative;
-  background: transparent;
-  width: 200rem;
-  height: 200rem;
-}
-
-#stars::after {
-  content: "";
-  position: absolute;
-  top: -10rem;
-  left: -100rem;
-  width: 100%;
-  height: 100%;
-  animation: animStarRotate 90s linear infinite;
-}
-
-#stars::after {
-  background-image: radial-gradient(#ffffff 1px, transparent 1%);
-  background-size: 50px 50px;
-}
-
-#stars::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 170%;
-  height: 500%;
-  animation: animStar 60s linear infinite;
-}
-
-#stars::before {
-  background-image: radial-gradient(#ffffff 1px, transparent 1%);
-  background-size: 50px 50px;
-  opacity: 0.5;
-}
-
-@keyframes animStar {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-135rem);
-  }
-}
-
-@keyframes animStarRotate {
-  from {
-    transform: rotate(360deg);
-  }
-
-  to {
-    transform: rotate(0);
-  }
-}
-
-@keyframes gradient_301 {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes pulse_3011 {
-  0% {
-    transform: scale(0.75);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-  }
-
-  100% {
-    transform: scale(0.75);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-}
-</style>

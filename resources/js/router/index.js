@@ -6,6 +6,7 @@ import profileindex from '../components/contributor/profile.vue';
 
 //pages
 import homePageIndex from '../components/home/index.vue';
+import allbooks from '../components/home/allbooks.vue'
 import friendList from '../components/home/friendLists.vue';
 import frontprofile from '../components/home/frontprofile.vue';
 import yourbooks from '../components/home/yourBooks.vue';
@@ -29,6 +30,14 @@ const routes = [
         path: '/',
         name: 'Home',
         component : homePageIndex,
+        meta:{
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/allbooks',
+        name: 'AllBooks',
+        component : allbooks,
         meta:{
             requiresAuth: false
         }

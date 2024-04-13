@@ -200,7 +200,7 @@ const friend = () => {
   router.push('/friendlist');
 };
 const frontprofile = ()=>{
-  router.push('/frontprofile')
+  router.push('/yourbooks')
 }
 let menuItems = document.querySelectorAll(".nav-bar ul li");
 

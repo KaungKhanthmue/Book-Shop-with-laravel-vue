@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::post('login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
-    Route::get('book/index',[AuthController::class,'bookindex']);
+    Route::get('books/index',[BookController::class,'index']);
 // Route::group(['middleware' => ['auth:sanctum']], function () {
 
 // });

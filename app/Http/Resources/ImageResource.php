@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class BookResource extends JsonResource
+
+class ImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +17,7 @@ class BookResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title' =>$this->title,
-            'descritpiton' =>$this->description,
-            'price' =>(int)$this->price,
-            'category' =>$this->categories['name'],
-            'tag'  =>$this->tags['name'],
-            'images' => ImageResource::collection($this->images),
-
+            'url' => Storage::disk('public')->url($this->url)
         ];
     }
 }
