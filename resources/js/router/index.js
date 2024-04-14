@@ -55,7 +55,7 @@ const routes = [
         name: 'FrontProfile',
         component: frontprofile,
         meta:{
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
@@ -63,7 +63,7 @@ const routes = [
         name: 'yourbooks',
         component: yourbooks,
         meta:{
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {

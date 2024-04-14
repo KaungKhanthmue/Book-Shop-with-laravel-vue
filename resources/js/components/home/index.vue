@@ -17,7 +17,7 @@
       <div class="mx-[100px] pt-10">
         <div class="grid grid-cols-4 gap-7">
           <div
-            v-for="book in booklist"
+            v-for="book in bookList"
             :key="book.id"
             class="border-black border bg-white rounded-3xl border-4"
           >
@@ -28,7 +28,7 @@
                 :key="image.id"
                  class="container-image overflow-hidden ">
                   <img
-                    class="w-full h-[180px] mt-[5px]"
+                    class="w-full h-[200px]"
                     :src="image.url"
                     alt
                   />
@@ -708,17 +708,16 @@ import Nav from "@/components/layout/nav.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
 
-const booklist = ref([]);
-const fetchUserList = async () => {
+const bookList = ref([]);
+const allBookList = async () => {
   try {
-    const response = await axios.get("api/books/index");
+  const response = await axios.get('/api/books/index');
     console.log(response.data.data);
-    booklist.value = response.data.data;
+    bookList.value = response.data.data;
   } catch (error) {
-    ``;
     console.error("Error fetching user list:", error);
   }
 };
-onMounted(fetchUserList);
+onMounted(allBookList);
 </script>
 

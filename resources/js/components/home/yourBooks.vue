@@ -653,11 +653,10 @@ import axios from "axios";
 const yourbooks = ref([]);
 const yourbooksList = async () => {
   try {
-    const response = await axios.get("/api/book/index");
-    console.log(response.data);
-    yourbooks.value = response.data;
+    const response = await axios.get("/api/books/index");
+    console.log(response.data.data);
+    yourbooks.value = response.data.data;
   } catch (error) {
-    ``;
     console.error("Error fetching user list:", error);
   }
 };

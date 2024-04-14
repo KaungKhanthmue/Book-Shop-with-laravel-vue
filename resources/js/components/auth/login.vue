@@ -42,10 +42,10 @@
                 <input type="password" v-model="form.password" class="input-field" placeholder="Password" />
             </div>
             <div class="btn">
-                <button class="button1">
+                <button class="button1" >
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </button>
-                <button class="button2" type="submit" >Sign Up</button>
+                <button class="button2" type="submit" @click="singup">Sign Up</button>
             </div>
             <button class="button3">Forgot Password</button>
             </form>
@@ -198,11 +198,14 @@ const handleLogin = async () => {
       const response = await axios.post('/api/login', form);
       if (response.data.token) {
           localStorage.setItem('token', response.data.token);
-          router.push('/contributor/home')
+          router.push('/')
       }
     } catch (error) {
         console.error('Error occurred during login:', error);
     }
+}
+const singup = ()=>{
+  router.push('register')
 }
 
 </script>
