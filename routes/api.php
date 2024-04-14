@@ -29,8 +29,10 @@ Route::post('register',[AuthController::class,'register']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('profile/edit',[AuthController::class,'edit']);
     Route::get('book-index',[BookController::class,'index']);
+    Route::get('yourbooksapi',[BookController::class,'yourBooks']);
     Route::post('book/store',[BookController::class,'store']);
     Route::post('like-unlike/{book}',[BookController::class,'liked']);
+    Route::get('likecount/{book}',[BookController::class,'likeCount']);
     Route::get('follow/unfollow/{user}',[UserController::class,'follow_unfollow']);
     Route::get('add-friend/{user}',[UserController::class,'addAndRemoveFriend']);
     Route::get('freind/requestlist/{user}',[UserController::class,'freindRequestList']);

@@ -14,7 +14,7 @@ class BookResource extends JsonResource
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {
+    {   
         return [
             'title' =>$this->title,
             'descritpiton' =>$this->description,
@@ -22,6 +22,7 @@ class BookResource extends JsonResource
             'category' =>$this->categories['name'],
             'tag'  =>$this->tags['name'],
             'images' => ImageResource::collection($this->images),
+            'likecount' => $this->bookLike->count()
 
         ];
     }

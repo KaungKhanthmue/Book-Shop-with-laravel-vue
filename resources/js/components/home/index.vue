@@ -1,7 +1,7 @@
 <template>
   <div class="h-[1000px] w-full bg-green-200">
     <Nav />
-    <div class="container mx-auto mx-auto mt-9 bg-red-700 rounded-3xl pb-9">
+    <div class="container mx-auto mx-auto mt-9 bg-black rounded-3xl pb-9">
       <div class="flex">
         <button class="btn">one</button>
         <button class="btn">two</button>
@@ -19,7 +19,7 @@
           <div
             v-for="book in bookList"
             :key="book.id"
-            class="border-black border bg-white rounded-3xl border-4"
+            class="border-red-300 shadow-2xl border bg-black  rounded-3xl border-4"
           >
             <div class="flex justify-center">
               <div class="card">
@@ -108,7 +108,7 @@
                     d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"
                   />
                 </svg>
-                100
+                {{book.likecount}}
               </button>
               <button class="flex bg-gray-300 pt-2 pl-2 rounded-3xl w-[80px] shadow-2xl">
                 <svg
@@ -339,7 +339,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #e7e7e7;
     width: 190px;
     height: 190px;
     cursor: pointer;

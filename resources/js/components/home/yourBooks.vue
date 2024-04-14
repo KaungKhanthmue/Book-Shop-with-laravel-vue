@@ -14,10 +14,11 @@
           >
               <div class="flex justify-center">
                 <div class="card">
-                  <div class="container-image overflow-hidden">
+                  <div class="container-image overflow-hidden" 
+                  v-for="image in book.images" :key="image.id">
                     <img
                       class="w-full h-[180px] mt-[5px]"
-                      src="https://getwallpapers.com/wallpaper/full/2/c/a/165944.jpg"
+                      :src="image.url"
                       alt
                     />
                   </div>
@@ -94,7 +95,7 @@
                       d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"
                     />
                   </svg>
-                  100
+                  {{book.likecount}}
                 </button>
                 <button class="flex bg-gray-300 pt-2 pl-2 rounded-3xl w-[80px] shadow-2xl">
                   <svg
@@ -653,7 +654,7 @@ import axios from "axios";
 const yourbooks = ref([]);
 const yourbooksList = async () => {
   try {
-    const response = await axios.get("/api/books/index");
+    const response = await axios.get("/api/yourbooksapi");
     console.log(response.data.data);
     yourbooks.value = response.data.data;
   } catch (error) {

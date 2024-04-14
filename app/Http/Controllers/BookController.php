@@ -43,6 +43,12 @@ class BookController extends Controller
             'status' => 'success',
         ]);
     }
+    public function yourBooks()
+    {
+        $book = Book::where('user_id',auth()->user()->id)->get();
+        return BookResource::collection($book);
+
+    }
     public function liked(Book $book)
     {
         $user= User::find(auth()->user()->id);
@@ -56,5 +62,8 @@ class BookController extends Controller
      $book->like($user->id);
      return 'unlike book';
     }
+    }
+    public function likeCount(Book $book){
+        return $book->bookLike->count();
     }
 }
