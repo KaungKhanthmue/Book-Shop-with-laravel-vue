@@ -80,5 +80,9 @@ class AuthController extends Controller
         ]);
         return new UserResource($user);
     }
+    public function yourInfo()
+    {
+        return new UserResource(auth()->user());
+    }
 }
 

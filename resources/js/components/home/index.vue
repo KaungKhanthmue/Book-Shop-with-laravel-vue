@@ -16,14 +16,14 @@
       </div>
       <div class="mx-[100px] pt-10">
         <div class="grid grid-cols-4 gap-7">
-          <div
+          <div v-if="bookList"
             v-for="book in bookList"
             :key="book.id"
             class="border-red-300 shadow-2xl border bg-black  rounded-3xl border-4"
           >
             <div class="flex justify-center">
               <div class="card">
-                <div
+                <div 
                 v-for="image in book.images"
                 :key="image.id"
                  class="container-image overflow-hidden ">

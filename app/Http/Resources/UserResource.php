@@ -17,6 +17,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'email' => $this->email,
             'profile_image' =>  ImageResource::collection($this->images->whereIn('image_type',['profile_photo'])),
             'cover_photo' => ImageResource::collection($this->images->whereIn('image_type',['cover_photo'])),
         ];

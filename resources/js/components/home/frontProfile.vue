@@ -1,16 +1,22 @@
 <template>
   <div class="bg-black h-[200px]">
     <Nav />
-    <div class="flex justify-between bg-white shadow-2xl h-[200px] mt-[50px]">
+    <div class="flex justify-between bg-white shadow-2xl h-[200px] mt-[50px]"
+    v-if="yourinfo.data">
       <div class=" h-[200px] w-[20%] flex justify-center">
-        <div class="bg-black h-[170px] w-[170px] rounded-full my-auto"></div>
+        <div class="bg-black h-[170px] w-[170px] rounded-full my-auto overflow-hidden">
+          <div class="w-full h-full " 
+          v-for="profileimg in yourinfo.data.profile_image" :key="profileimg.id">
+              <img :src="profileimg.url" alt="" class="w-full h-full">
+          </div>
+        </div>
       </div>
       <div class=" h-[200px] w-[80%] flex justify-center">
         <div class="w-[95%] h-[180px] my-auto flex">
           <div class="w-[80%] pt-[20px]">
             <div class="w-[100%] flex">
               <div class="w-[150px] text-xl font-bold">Your Name :</div>
-              <div class="text-lg font-medium">Kaung Khant Hmue</div>
+              <div class="text-lg font-medium">{{yourinfo.data.name}}</div>
             </div>
             <div class="w-[100%] flex">
               <div class="w-[150px] text-xl font-bold">Nick Name :</div>
@@ -18,7 +24,7 @@
             </div>
             <div class="w-[100%] flex">
               <div class="w-[150px] text-xl font-bold">Your Email :</div>
-              <div class="text-lg font-medium">kaungkhanthmue58@gmail.com</div>
+              <div class="text-lg font-medium">{{yourinfo.data.email}}</div>
             </div>
             <div class="w-[100%] flex">
               <div class="w-[150px] text-xl font-bold">Your Follower :</div>
@@ -352,8 +358,20 @@
 </style>
 <script setup>
 import Nav from "@/components/layout/nav.vue";
-import axios from 'axios';
+import { onMounted, ref } from "vue";
+import axios from "axios";
 
-const your
+const yourinfo = ref([]);
+const yourAllInfo = async () => {
+  try{
+  const response = await axios.get('api/yourinfo')
+  console.log(response.data);
+  yourinfo.value = response.data
+  }catch(error){
+    console.error('Error')
+  }
+ 
+}
+onMounted(yourAllInfo);
 
 </script>

@@ -27,6 +27,7 @@ Route::post('register',[AuthController::class,'register']);
 
 // });
 Route::middleware('auth:sanctum')->group(function(){
+    Route::get('yourinfo',[AuthController::class,'yourInfo']);
     Route::post('profile/edit',[AuthController::class,'edit']);
     Route::get('book-index',[BookController::class,'index']);
     Route::get('yourbooksapi',[BookController::class,'yourBooks']);

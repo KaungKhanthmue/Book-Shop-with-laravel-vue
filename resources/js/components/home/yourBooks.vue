@@ -7,7 +7,7 @@
       <div class="container mx-auto my-auto bg-black h-[500px]">
       <div class="mx-[100px]">
         <div class="grid grid-cols-4 gap-7">
-          <div
+          <div v-if="yourbooks"
             v-for="book in yourbooks"
             :key="book.id"
             class="border-black border bg-white rounded-3xl border-4"

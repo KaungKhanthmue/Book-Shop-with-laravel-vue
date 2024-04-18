@@ -64,7 +64,7 @@
         </defs>
       </svg>
     </div>
-    <div class="w-[20%] ">
+    <div class="w-[20%]" v-if="auth">
       <div class="flex justify-end h-[50%]">
       <div class="w-[60%]"><button @click="login" class="w-full rounded-lg h-[90%] bg-black text-white shadow-2xl">
         login</button></div></div>
@@ -72,6 +72,7 @@
       <div class="w-[60%] pt-8"><button @click="register" class="bg-black h-[90%]  text-white w-full rounded-lg shadow-2xl">
         Register</button></div></div>
     </div>
+    <div class="w-[20%]" v-else ></div>    
   </div>
 </template>
 <style scoped>
@@ -234,7 +235,7 @@
 }
 </style>
 <script setup>
-import {ref} from 'vue';
+import {ref,onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const isFriendActive = ref(false);
@@ -256,6 +257,15 @@ const register = ()=>{
 const haveAuth = ()=>{
 
 }
+const auth = ref(false);
+const checkAuth = ()=>{
+      const token = localStorage.getItem('token');
+      console.log(token);
+      if(token == null){
+        auth.value= true;
+      }
+}
+onMounted(checkAuth);
 let menuItems = document.querySelectorAll(".nav-bar ul li");
 
 const navItemClick = function(el) {

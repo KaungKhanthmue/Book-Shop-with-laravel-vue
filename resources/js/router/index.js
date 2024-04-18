@@ -47,7 +47,7 @@ const routes = [
         name: 'FriendList',
         component: friendList,
         meta:{
-            requiresAuth: true
+            requiresAuth: false
         }
     },
     {
@@ -71,7 +71,7 @@ const routes = [
         name: 'Profile',
         component : profileindex,
         meta:{
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
