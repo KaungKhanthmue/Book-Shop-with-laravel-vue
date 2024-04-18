@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,7 +78,7 @@ class AuthController extends Controller
             'image_type' => 'cover_photo',
             'url' => $cover_img_path,
         ]);
-        return $user;
+        return new UserResource($user);
     }
 }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FriendListResource;
 use App\Http\Resources\FriendRequestResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,12 +17,23 @@ class UserController extends Controller
         if($isFollowing)
         {
             $user->unfollow();
-            dd('unfollow');
+            return "unfollow";
         }
         else{
             $user->follow();
-            dd('follow');
+            return "follow";
         }
+
+    }
+    public function authFollowList(){
+        $user = User::where('id',auth()->user()->id)->first();
+        $following = $user->follower()->get();
+        return FriendListResource::collection($following);
+    }
+    public function userFollowList(User $user)
+    {
+        $following = $user->follower()->get();
+        return FriendListResource::collection($following);
 
     }
 
@@ -45,9 +58,11 @@ class UserController extends Controller
     }
     public function friendAll(){
         if(auth('sanctum')->user()){
-            return User::whereNot('id',auth('sanctum')->user()->id)->get();
+            $user = User::whereNot('id',auth('sanctum')->user()->id)->get();
+            return UserResource::collection($user);
         }
-        return User::all();
+        $user = User::all();
+        return UserResource::collection($user);
   
     }
 }

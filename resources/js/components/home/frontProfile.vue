@@ -352,4 +352,8 @@
 </style>
 <script setup>
 import Nav from "@/components/layout/nav.vue";
+import axios from 'axios';
+
+const your
+
 </script>

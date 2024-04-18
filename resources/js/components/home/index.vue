@@ -83,7 +83,7 @@
               </button>
             </div>
             <div class="flex justify-between p-2">
-              <button class="bt px-2">
+              <button class="bt px-2"  @click="likeUnlike(book.id)">
                 <svg
                   class="empty"
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +130,7 @@
                     d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                   />
                 </svg>
-                <div class="ml-2">100</div>
+                <div class="ml-2">{{book.id}}</div>
               </button>
             </div>
           </div>
@@ -140,6 +140,32 @@
     <!-- <router-link to="/login">Login</router-link> -->
   </div>
 </template>
+<script setup>
+import Nav from "@/components/layout/nav.vue";
+import { onMounted, ref } from "vue";
+import axios from "axios";
+
+const bookList = ref([]);
+const allBookList = async () => {
+  try {
+  const response = await axios.get('/api/books/index');
+    console.log(response.data.data);
+    bookList.value = response.data.data;
+  } catch (error) {
+    console.error("Error fetching user list:", error);
+  }
+};
+const likeUnlike = async (bookId) => {
+console.log(bookId);
+  // try {
+    const response = await axios.post(`/api/like-unlike/${bookId}`);
+    console.log(response);
+  // } catch (error) {
+  //   console.error(error);
+  // }
+}
+onMounted(allBookList);
+</script>
 <style scoped>
   .bt {
     display: flex;
@@ -702,21 +728,4 @@
     }
   }
 </style>
-<script setup>
-import Nav from "@/components/layout/nav.vue";
-import { onMounted, ref } from "vue";
-import axios from "axios";
-
-const bookList = ref([]);
-const allBookList = async () => {
-  try {
-  const response = await axios.get('/api/books/index');
-    console.log(response.data.data);
-    bookList.value = response.data.data;
-  } catch (error) {
-    console.error("Error fetching user list:", error);
-  }
-};
-onMounted(allBookList);
-</script>
 

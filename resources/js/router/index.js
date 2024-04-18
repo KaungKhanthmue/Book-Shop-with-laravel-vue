@@ -47,7 +47,7 @@ const routes = [
         name: 'FriendList',
         component: friendList,
         meta:{
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {

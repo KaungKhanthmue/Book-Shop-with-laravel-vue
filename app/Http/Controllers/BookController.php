@@ -56,11 +56,11 @@ class BookController extends Controller
     if($hasLiked)
     {
      $book->unlike($user->id);
-     return 'liked book';
+     return 'unlike book';
     }
     else{
      $book->like($user->id);
-     return 'unlike book';
+     return 'like book';
     }
     }
     public function likeCount(Book $book){

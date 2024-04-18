@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('like-unlike/{book}',[BookController::class,'liked']);
     Route::get('likecount/{book}',[BookController::class,'likeCount']);
     Route::get('follow/unfollow/{user}',[UserController::class,'follow_unfollow']);
+    Route::get('followList',[UserController::class,'authFollowList']);
+    Route::get('followListUser',[UserController::class,'userFollowList']);
     Route::get('add-friend/{user}',[UserController::class,'addAndRemoveFriend']);
     Route::get('freind/requestlist/{user}',[UserController::class,'freindRequestList']);
 });
