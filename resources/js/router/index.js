@@ -8,7 +8,7 @@ import profileindex from '../components/contributor/profile.vue';
 import homePageIndex from '../components/home/index.vue';
 import allbooks from '../components/home/allbooks.vue'
 import friendList from '../components/home/friendLists.vue';
-import frontprofile from '../components/home/frontprofile.vue';
+import frontprofile from '../components/home/frontProfile.vue';
 import yourbooks from '../components/home/yourBooks.vue';
 //not found
 import notFound from '../components/noFound.vue';
