@@ -4,16 +4,16 @@
     <div class="container h-[90px] w-[60%]">
       <div class="nav-bar">
         <ul>
-          <li class="active">
-            <div @click="book">
+        <li :class="{ active: activeMenuItem === 'book' }">
+            <div @click="setActive('book')">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
             </svg>
               <span>Books</span>
             </div>
           </li>
-          <li>
-            <div @click="friend">
+          <li :class="{ active: activeMenuItem === 'friend' }">
+            <div @click="setActive('friend')">
            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
            </svg>
@@ -86,7 +86,6 @@
 .container {
 
   margin: 0 auto;
-  /* background: linear-gradient(to top right, #f01d39, #fa2d6e); */
   border-radius: 0 0 50px 50px;
   overflow: hidden;
   position: relative;
@@ -238,17 +237,24 @@
 import {ref,onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const active = '';
 const isFriendActive = ref(false);
-const book = () => {
-  router.push('/');
+const activeMenuItem = ref('');
+
+const setActive = (menuItem) => {
+  activeMenuItem.value = menuItem;
+  if (menuItem === 'book') {
+    router.push('/');
+  } else if (menuItem === 'friend') {
+    router.push('/friendlist');
+  } else if (menuItem === 'frontprofile') {
+    router.push('/yourbooks');
+  } else if (menuItem === 'notification') {
+    router.push('/notifications');
+  }
 };
-const friend = () => {
-  router.push('/friendlist');
-};
-const frontprofile = ()=>{
-  router.push('/yourbooks')
-}
 const login = ()=>{
+    active = 'active';
   router.push('login')
 }
 const register = ()=>{
